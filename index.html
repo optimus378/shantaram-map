@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Shantaram Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>body{margin:0;font-family:sans-serif;display:flex;height:100vh}#side{width:340px;overflow:auto;background:#1d1b19;color:#eee;padding:10px}#map{flex:1}
+.card{padding:6px;border-radius:6px;margin:4px 0;cursor:pointer;background:#2b2825}.card.on{background:#8a4b14}
+.tag{font-size:11px;padding:1px 5px;border-radius:4px;margin-right:4px;color:#fff}.exact{background:#2e7d32}.approximate{background:#f9a825;color:#000}.fictional{background:#6a1b9a}
+#side a{color:#ffcc80}input{width:100%}</style></head><body>
+<div id="side"><h2>Shantaram: Lin's Journey</h2><input type="range" id="sl" min="0" value="0"><div id="cur"></div><hr><div id="list"></div></div><div id="map"></div>
+<script>
+const map=L.map('map').setView([18.93,72.83],13);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+let D=[],M=[],line;
+const sv=e=>`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${e.lat},${e.lng}`;
+const html=e=>`<b>${e.id}. ${e.place}</b><br><small>${e.part} · ${e.chapter}</small><br>${e.event}<br><span class="tag ${e.confidence}">${e.confidence}</span><span class="tag" style="background:#455a64">Street View: ${e.streetview}</span><br><i>${e.notes}</i><br><a target="_blank" href="${sv(e)}">Open in Street View ↗</a>`;
+function go(i){const e=D[i];sl.value=i;cur.innerHTML=html(e);document.querySelectorAll('.card').forEach((c,j)=>c.classList.toggle('on',j==i));
+ if(line)map.removeLayer(line);line=L.polyline(D.slice(0,i+1).map(e=>[e.lat,e.lng]),{color:'#d84315'}).addTo(map);
+ map.setView([e.lat,e.lng],(e.lat<17||e.lat>20||e.lng>74)?7:14);M[i].openPopup();}
+fetch('locations.json').then(r=>r.json()).then(d=>{D=d;sl.max=d.length-1;
+ d.forEach((e,i)=>{M.push(L.marker([e.lat,e.lng]).addTo(map).bindPopup(html(e)).on('click',()=>go(i)));
+  const c=document.createElement('div');c.className='card';c.innerHTML=`<b>${e.id}.</b> ${e.place} <span class="tag ${e.confidence}">${e.confidence}</span>`;c.onclick=()=>go(i);list.appendChild(c);});
+ sl.oninput=()=>go(+sl.value);go(3);document.title='loaded '+d.length;});
+</script></body></html>
