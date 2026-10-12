@@ -1,22 +1,63 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Shantaram Map</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shantaram Map</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>body{margin:0;font-family:sans-serif;display:flex;height:100vh}#side{width:340px;overflow:auto;background:#1d1b19;color:#eee;padding:10px}#map{flex:1}
-.card{padding:6px;border-radius:6px;margin:4px 0;cursor:pointer;background:#2b2825}.card.on{background:#8a4b14}
-.tag{font-size:11px;padding:1px 5px;border-radius:4px;margin-right:4px;color:#fff}.exact{background:#2e7d32}.approximate{background:#f9a825;color:#000}.fictional{background:#6a1b9a}
-#side a{color:#ffcc80}input{width:100%}</style></head><body>
-<div id="side"><h2>Shantaram: Lin's Journey</h2><input type="range" id="sl" min="0" value="0"><div id="cur"></div><hr><div id="list"></div></div><div id="map"></div>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,sans-serif}
+body{display:flex}
+#side{width:360px;overflow:auto;background:#1d1b19;color:#eee;padding:10px;display:flex;flex-direction:column}
+#map{flex:1;height:100%}
+h2{margin:4px 0 8px;font-size:20px}
+.card{padding:10px;border-radius:8px;margin:4px 0;cursor:pointer;background:#2b2825;min-height:44px}.card.on{background:#8a4b14}
+.tag{font-size:11px;padding:2px 6px;border-radius:4px;margin-right:4px;color:#fff;white-space:nowrap}.exact{background:#2e7d32}.approximate{background:#f9a825;color:#000}.fictional{background:#6a1b9a}
+#side a{color:#ffcc80}a.sv{display:inline-block;padding:8px 0;font-weight:600}
+.ctrl{display:flex;gap:8px;align-items:center}.ctrl button{min-width:48px;min-height:44px;font-size:20px;border:0;border-radius:8px;background:#3a3631;color:#fff}
+input[type=range]{flex:1;height:44px}
+#cur{overflow-wrap:anywhere}#handle{display:none}
+.leaflet-popup-content{overflow-wrap:anywhere}
+@media (max-width:767px){
+ body{display:block}#map{position:fixed;inset:0;height:100%}
+ #side{position:fixed;left:0;right:0;bottom:0;width:100%;z-index:1000;border-radius:16px 16px 0 0;
+  max-height:85vh;height:var(--h,190px);transition:height .25s;padding:0 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px #0008}
+ #side.dragging{transition:none}
+ #handle{display:flex;justify-content:center;align-items:center;height:28px;flex:none;cursor:grab;touch-action:none}
+ #handle i{width:44px;height:5px;border-radius:3px;background:#777}
+ h2{display:none}#side.open h2{display:block}
+ #cur{font-size:14px}#cur .notes{display:none}#side.open #cur .notes{display:inline}
+ #list{display:none}#side.open #list{display:block}
+ .leaflet-popup-content{max-width:calc(100vw - 80px)!important}
+ .leaflet-control-zoom{display:none}
+}
+</style></head><body>
+<div id="side"><div id="handle" aria-label="Expand"><i></i></div>
+<h2>Shantaram: Lin's Journey</h2>
+<div class="ctrl"><button id="prev" aria-label="Previous">‹</button><input type="range" id="sl" min="0" value="0" aria-label="Timeline"><button id="next" aria-label="Next">›</button></div>
+<div id="cur"></div><hr><div id="list"></div></div><div id="map"></div>
 <script>
-const map=L.map('map').setView([18.93,72.83],13);
+const mob=()=>innerWidth<768;
+const map=L.map('map',{zoomControl:true}).setView([18.93,72.83],13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
-let D=[],M=[],line;
+let D=[],M=[],line,idx=0;
 const sv=e=>`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${e.lat},${e.lng}`;
-const html=e=>`<b>${e.id}. ${e.place}</b><br><small>${e.part} · ${e.chapter}</small><br>${e.event}<br><span class="tag ${e.confidence}">${e.confidence}</span><span class="tag" style="background:#455a64">Street View: ${e.streetview}</span><br><i>${e.notes}</i><br><a target="_blank" href="${sv(e)}">Open in Street View ↗</a>`;
-function go(i){const e=D[i];sl.value=i;cur.innerHTML=html(e);document.querySelectorAll('.card').forEach((c,j)=>c.classList.toggle('on',j==i));
+const html=e=>`<b>${e.id}. ${e.place}</b><br><small>${e.part} · ${e.chapter}</small><br>${e.event}<br><span class="tag ${e.confidence}">${e.confidence}</span><span class="tag" style="background:#455a64">Street View: ${e.streetview}</span><br><i class="notes">${e.notes}<br></i><a class="sv" target="_blank" rel="noopener" href="${sv(e)}">Open in Street View ↗</a>`;
+function go(i){i=Math.max(0,Math.min(D.length-1,i));idx=i;const e=D[i];sl.value=i;cur.innerHTML=html(e);
+ document.querySelectorAll('.card').forEach((c,j)=>c.classList.toggle('on',j==i));
  if(line)map.removeLayer(line);line=L.polyline(D.slice(0,i+1).map(e=>[e.lat,e.lng]),{color:'#d84315'}).addTo(map);
- map.setView([e.lat,e.lng],(e.lat<17||e.lat>20||e.lng>74)?7:14);M[i].openPopup();}
+ const far=e.lat<17||e.lat>20||e.lng>74;map.setView([e.lat,e.lng],far?7:14);
+ if(mob()){map.panBy([0,Math.round(side.offsetHeight/2)],{animate:false});}else M[i].openPopup();}
 fetch('locations.json').then(r=>r.json()).then(d=>{D=d;sl.max=d.length-1;
- d.forEach((e,i)=>{M.push(L.marker([e.lat,e.lng]).addTo(map).bindPopup(html(e)).on('click',()=>go(i)));
-  const c=document.createElement('div');c.className='card';c.innerHTML=`<b>${e.id}.</b> ${e.place} <span class="tag ${e.confidence}">${e.confidence}</span>`;c.onclick=()=>go(i);list.appendChild(c);});
- sl.oninput=()=>go(+sl.value);go(3);document.title='loaded '+d.length;});
+ d.forEach((e,i)=>{M.push(L.marker([e.lat,e.lng]).addTo(map).bindPopup(html(e),{maxWidth:Math.min(300,innerWidth-80),autoPanPadding:[20,20]}).on('click',()=>go(i)));
+  const c=document.createElement('div');c.className='card';c.innerHTML=`<b>${e.id}.</b> ${e.place} <span class="tag ${e.confidence}">${e.confidence}</span>`;c.onclick=()=>{go(i);if(mob())setOpen(false)};list.appendChild(c);});
+ sl.oninput=()=>go(+sl.value);prev.onclick=()=>go(idx-1);next.onclick=()=>go(idx+1);go(3);document.title='loaded '+d.length;});
+// bottom sheet
+const MIN=190;function setOpen(o){side.classList.toggle('open',o);side.style.setProperty('--h',o?Math.round(innerHeight*.85)+'px':MIN+'px');}
+let sy=null,sh=0,moved=false;
+handle.addEventListener('pointerdown',e=>{sy=e.clientY;sh=side.offsetHeight;moved=false;side.classList.add('dragging');handle.setPointerCapture(e.pointerId)});
+handle.addEventListener('pointermove',e=>{if(sy==null)return;const dy=sy-e.clientY;if(Math.abs(dy)>5)moved=true;
+ side.style.setProperty('--h',Math.max(MIN,Math.min(innerHeight*.85,sh+dy))+'px');if(sh+dy>MIN+60)side.classList.add('open');});
+handle.addEventListener('pointerup',e=>{side.classList.remove('dragging');const h=side.offsetHeight;
+ setOpen(moved?h>innerHeight*.4:!side.classList.contains('open'));sy=null;});
+addEventListener('resize',()=>{if(!mob()){side.style.removeProperty('--h');side.classList.remove('open')}});
+if(location.hash=='#open')setTimeout(()=>setOpen(true),0);
 </script></body></html>
