@@ -37,11 +37,16 @@ input[type=range]{flex:1;height:44px}
 <script>
 const mob=()=>innerWidth<768;
 const map=L.map('map',{zoomControl:true}).setView([18.93,72.83],13);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+const esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Imagery © Esri, Maxar, Earthstar Geographics',maxZoom:19});
+L.control.layers({'Map':osm,'Satellite':esri},null,{position:'topright'}).addTo(map);
+if(location.hash.includes('sat')){map.removeLayer(osm);esri.addTo(map);}
 let D=[],M=[],line,idx=0;
-const sv=e=>`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${e.svLat??e.lat},${e.svLng??e.lng}`+(e.heading!=null?`&heading=${e.heading}`:'');
+const sv=e=>`https://www.google.com/maps?layer=c&cbll=${e.svLat??e.lat},${e.svLng??e.lng}&cbp=12,${e.heading??0},0,0,0`;
+const sat=e=>`https://www.google.com/maps/@?api=1&map_action=map&center=${e.lat},${e.lng}&zoom=15&basemap=satellite`;
+const svl=e=>e.streetview=='no'?`<span class="tag" style="background:#555">No Street View here</span> <a class="sv" target="_blank" rel="noopener" href="${sat(e)}">Satellite view ↗</a>`:`<a class="sv" target="_blank" rel="noopener" href="${sv(e)}">Open in Street View ↗</a>${e.svRoad?` <small>(${e.svRoad})</small>`:''}`;
 const gm=e=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapsQuery||e.place)}`;
-const html=e=>`<b>${e.id}. ${e.place}</b><br><small>${e.part} · ${e.chapter}</small><br>${e.event}<br><span class="tag ${e.confidence}">${e.confidence}</span><span class="tag" style="background:#455a64">Street View: ${e.streetview}</span><br><i class="notes">${e.notes}<br></i><a class="sv" target="_blank" rel="noopener" href="${sv(e)}">Open in Street View ↗</a><br><a class="sv" target="_blank" rel="noopener" href="${gm(e)}">Find on Google Maps ↗</a>`;
+const html=e=>`<b>${e.id}. ${e.place}</b><br><small>${e.part} · ${e.chapter}</small><br>${e.event}<br><span class="tag ${e.confidence}">${e.confidence}</span><span class="tag" style="background:#455a64">Street View: ${e.streetview}</span><br><i class="notes">${e.notes}<br></i>${svl(e)}<br><a class="sv" target="_blank" rel="noopener" href="${gm(e)}">Find on Google Maps ↗</a>`;
 function go(i){i=Math.max(0,Math.min(D.length-1,i));idx=i;const e=D[i];sl.value=i;cur.innerHTML=html(e);
  document.querySelectorAll('.card').forEach((c,j)=>c.classList.toggle('on',j==i));
  if(line)map.removeLayer(line);line=L.polyline(D.slice(0,i+1).map(e=>[e.lat,e.lng]),{color:'#d84315'}).addTo(map);
@@ -60,5 +65,5 @@ handle.addEventListener('pointermove',e=>{if(sy==null)return;const dy=sy-e.clien
 handle.addEventListener('pointerup',e=>{side.classList.remove('dragging');const h=side.offsetHeight;
  setOpen(moved?h>innerHeight*.4:!side.classList.contains('open'));sy=null;});
 addEventListener('resize',()=>{if(!mob()){side.style.removeProperty('--h');side.classList.remove('open')}});
-if(location.hash=='#open')setTimeout(()=>setOpen(true),0);
+if(location.hash.includes('open'))setTimeout(()=>setOpen(true),0);
 </script></body></html>
