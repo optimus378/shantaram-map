@@ -2,14 +2,15 @@
  {
   "id": 1,
   "place": "Sahar International Airport (now CSMIA)",
-  "lat": 19.0896,
-  "lng": 72.8656,
+  "lat": 19.090138,
+  "lng": 72.863822,
   "confidence": "approximate",
   "streetview": "likely",
   "part": "Part 1",
   "chapter": "Ch 1",
   "event": "Lin lands in Bombay on a false passport after escaping prison in Australia.",
-  "notes": "Approach roads have coverage; the 1980s terminal is gone."
+  "notes": "Approach roads have coverage; the 1980s terminal is gone.",
+  "mapsQuery": "Chhatrapati Shivaji Maharaj International Airport Mumbai"
  },
  {
   "id": 2,
@@ -21,7 +22,8 @@
   "part": "Part 1",
   "chapter": "Ch 1",
   "event": "Lin meets Prabaker the guide and checks into a cheap guest house.",
-  "notes": "The guest house closed, but the building still stands."
+  "notes": "The guest house closed, but the building still stands.",
+  "mapsQuery": "FabExpress Colaba Grand Minoo Desai Road Colaba Mumbai"
  },
  {
   "id": 3,
@@ -33,55 +35,63 @@
   "part": "Part 1",
   "chapter": "Ch 1",
   "event": "Karla pulls Lin back from an oncoming bus.",
-  "notes": "The main road has good coverage."
+  "notes": "The main road has good coverage.",
+  "mapsQuery": "Colaba Causeway Mumbai"
  },
  {
   "id": 4,
   "place": "Leopold Cafe",
-  "lat": 18.9226,
-  "lng": 72.8317,
+  "lat": 18.922712,
+  "lng": 72.831763,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 1",
   "chapter": "Ch 2",
   "event": "Lin meets Karla and the expat crowd at the bar.",
-  "notes": "Still open; bullet holes from the 2008 attack are kept on display."
+  "notes": "Still open; bullet holes from the 2008 attack are kept on display.",
+  "mapsQuery": "Leopold Cafe Colaba Mumbai",
+  "svLat": 18.92271,
+  "svLng": 72.83153,
+  "heading": 90
  },
  {
   "id": 5,
   "place": "Gateway of India / sea wall",
-  "lat": 18.922,
-  "lng": 72.8347,
+  "lat": 18.921966,
+  "lng": 72.834566,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 1",
   "chapter": "Ch 2-3",
   "event": "Lin and Karla walk the sea wall toward the Radio Club.",
-  "notes": "Plenty of coverage."
+  "notes": "Plenty of coverage.",
+  "mapsQuery": "Gateway of India Mumbai"
  },
  {
   "id": 6,
   "place": "Taj Mahal Palace Hotel",
-  "lat": 18.9217,
-  "lng": 72.8332,
+  "lat": 18.921778,
+  "lng": 72.833285,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 1",
   "chapter": "Ch 2-3",
   "event": "A landmark of Lin's early days in Colaba.",
-  "notes": "Street-level coverage."
+  "notes": "Street-level coverage.",
+  "mapsQuery": "Taj Mahal Palace Mumbai"
  },
  {
   "id": 7,
   "place": "Sassoon Dock",
-  "lat": 18.9118,
-  "lng": 72.8262,
+  "lat": 18.914408,
+  "lng": 72.824228,
   "confidence": "approximate",
   "streetview": "partial",
   "part": "Part 1",
   "chapter": "Ch 3-4",
   "event": "Prabaker's tour of the city takes in the fish docks.",
-  "notes": "Coverage on the road outside; inside is mostly user photos."
+  "notes": "Coverage on the road outside; inside is mostly user photos.",
+  "mapsQuery": "Sassoon Dock Colaba Mumbai"
  },
  {
   "id": 8,
@@ -98,14 +108,15 @@
  {
   "id": 9,
   "place": "Victoria Terminus (CST)",
-  "lat": 18.9398,
-  "lng": 72.8355,
+  "lat": 18.939856,
+  "lng": 72.835519,
   "confidence": "approximate",
   "streetview": "yes",
   "part": "Part 1",
   "chapter": "Ch 5",
   "event": "Lin and Prabaker set off inland toward his village.",
-  "notes": "Which station is a guess."
+  "notes": "Which station is a guess.",
+  "mapsQuery": "Chhatrapati Shivaji Maharaj Terminus Mumbai"
  },
  {
   "id": 10,
@@ -129,7 +140,8 @@
   "part": "Part 1",
   "chapter": "Ch 8",
   "event": "Robbed on the way back, Lin moves into the slum.",
-  "notes": "Coverage on the main roads only."
+  "notes": "Coverage on the main roads only.",
+  "mapsQuery": "Cuffe Parade Mumbai"
  },
  {
   "id": 12,
@@ -182,38 +194,44 @@
  {
   "id": 16,
   "place": "Haji Ali Dargah",
-  "lat": 18.9827,
-  "lng": 72.8089,
+  "lat": 18.982823,
+  "lng": 72.808993,
   "confidence": "approximate",
   "streetview": "yes",
   "part": "Part 2",
   "chapter": "Ch 17",
   "event": "Scene at the Haji Ali causeway (check against the book).",
-  "notes": "Causeway has coverage."
+  "notes": "Causeway has coverage.",
+  "mapsQuery": "Haji Ali Dargah Mumbai"
  },
  {
   "id": 17,
   "place": "Colaba Police Station",
-  "lat": 18.923,
-  "lng": 72.8315,
+  "lat": 18.922439,
+  "lng": 72.830984,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 2",
   "chapter": "Ch 18-19",
   "event": "Lin is arrested and held here.",
-  "notes": "Across the road from Leopold's."
+  "notes": "Across the road from Leopold's.",
+  "mapsQuery": "Colaba Police Station Mumbai",
+  "svLat": 18.92245,
+  "svLng": 72.83152,
+  "heading": 270
  },
  {
   "id": 18,
   "place": "Arthur Road Jail",
-  "lat": 18.9787,
-  "lng": 72.8285,
+  "lat": 18.985169,
+  "lng": 72.829499,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 2",
   "chapter": "Ch 19-20",
   "event": "Four brutal months inside until Khaderbhai pays for his release.",
-  "notes": "Outside walls only."
+  "notes": "Outside walls only.",
+  "mapsQuery": "Arthur Road Jail Mumbai"
  },
  {
   "id": 19,
@@ -230,26 +248,28 @@
  {
   "id": 20,
   "place": "Film City, Goregaon",
-  "lat": 19.159,
-  "lng": 72.877,
+  "lat": 19.164919,
+  "lng": 72.882788,
   "confidence": "approximate",
   "streetview": "partial",
   "part": "Part 3",
   "chapter": "Ch 24",
   "event": "Lin works as a Bollywood extra.",
-  "notes": "Studio grounds partly covered."
+  "notes": "Studio grounds partly covered.",
+  "mapsQuery": "Dadasaheb Phalke Chitranagari Film City Goregaon Mumbai"
  },
  {
   "id": 21,
   "place": "Goa (Anjuna, stand-in)",
-  "lat": 15.5733,
-  "lng": 73.7408,
+  "lat": 15.576096,
+  "lng": 73.740184,
   "confidence": "approximate",
   "streetview": "yes",
   "part": "Part 3",
   "chapter": "Ch 26",
   "event": "A short getaway with Karla.",
-  "notes": "The beach isn't named in the book."
+  "notes": "The beach isn't named in the book.",
+  "mapsQuery": "Anjuna Beach Goa"
  },
  {
   "id": 22,
@@ -266,38 +286,41 @@
  {
   "id": 23,
   "place": "Karachi",
-  "lat": 24.8607,
-  "lng": 67.0011,
+  "lat": 24.854684,
+  "lng": 67.020706,
   "confidence": "approximate",
   "streetview": "no",
   "part": "Part 4",
   "chapter": "Ch 29",
   "event": "The group heads to Pakistan.",
-  "notes": "Almost no Street View in Pakistan."
+  "notes": "Almost no Street View in Pakistan.",
+  "mapsQuery": "Karachi Pakistan"
  },
  {
   "id": 24,
   "place": "Quetta",
-  "lat": 30.1798,
-  "lng": 66.975,
+  "lat": 30.191627,
+  "lng": 67.000756,
   "confidence": "approximate",
   "streetview": "no",
   "part": "Part 4",
   "chapter": "Ch 30",
   "event": "They stage in Quetta before the border.",
-  "notes": "No coverage."
+  "notes": "No coverage.",
+  "mapsQuery": "Quetta Pakistan"
  },
  {
   "id": 25,
   "place": "Chaman / Kandahar",
-  "lat": 31.6133,
-  "lng": 65.7101,
+  "lat": 31.620574,
+  "lng": 65.715757,
   "confidence": "approximate",
   "streetview": "no",
   "part": "Part 4",
   "chapter": "Ch 31-32",
   "event": "They cross into Afghanistan with supplies for the mujahideen.",
-  "notes": "No coverage in Afghanistan."
+  "notes": "No coverage in Afghanistan.",
+  "mapsQuery": "Kandahar Afghanistan"
  },
  {
   "id": 26,
@@ -314,14 +337,18 @@
  {
   "id": 27,
   "place": "Return to Colaba / Leopold's",
-  "lat": 18.9226,
-  "lng": 72.8317,
+  "lat": 18.922712,
+  "lng": 72.831763,
   "confidence": "exact",
   "streetview": "yes",
   "part": "Part 5",
   "chapter": "Ch 35-41",
   "event": "Lin returns to Bombay and settles accounts with Karla and others.",
-  "notes": "Back at Leopold's."
+  "notes": "Back at Leopold's.",
+  "mapsQuery": "Leopold Cafe Colaba Mumbai",
+  "svLat": 18.92271,
+  "svLng": 72.83153,
+  "heading": 90
  },
  {
   "id": 28,
